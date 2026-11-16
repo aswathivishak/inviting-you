@@ -18,13 +18,32 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-        header {
-            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('pexel2.jpg') no-repeat center/cover;
+        /* header {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('head.jpg') no-repeat center/cover;
             color: #fff;
             text-align: center;
             padding: 140px 20px;
             position: relative;
             background-attachment: fixed;
+        } */
+        header {
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('head.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed; /* Keeps the nice scroll effect on laptops/desktops */
+            color: #fff;
+            text-align: center;
+            padding: 140px 20px;
+            position: relative;
+        }
+
+        /* Mobile fix: removes the buggy 'fixed' behavior so the image stays perfectly centered */
+        @media (max-width: 880px) {
+            header {
+                background-attachment: scroll;
+                background-position: center center;
+            }
         }
         header h1 {
             font-family: 'Great Vibes', cursive;
@@ -77,21 +96,26 @@
             to { opacity: 1; }
         }
 
-        /* Typing animation for invitation text */
+/* Typing animation for invitation text */
         .invitation .typing {
-            display: inline-block;
+            display: inline; /* Changed to inline so the cursor perfectly hugs the end of the text */
             white-space: pre-wrap;
-            max-width: 700px;
-            text-align: center;
-            border-right: .12em solid rgba(74,74,74,0.85);
-            padding-right: 6px;
             font-style: italic;
         }
-        @keyframes blinkCaret {
-            50% { border-color: transparent; }
+        
+        /* The new cursor acts like a text character at the end of the line */
+        .invitation .typing.caret::after {
+            content: '|';
+            display: inline-block;
+            margin-left: 2px;
+            font-style: normal;
+            font-weight: 300;
+            color: rgba(74,74,74,0.85);
+            animation: blinkCursor 1s steps(2, start) infinite;
         }
-        .invitation .typing.caret {
-            animation: blinkCaret 1s steps(1) infinite;
+        
+        @keyframes blinkCursor {
+            to { visibility: hidden; }
         }
 
         /* Photos Carousel */
@@ -609,19 +633,19 @@
     <section class="photos-section">
         <div class="photos-inner" id="photosInner">
             <div class="photo-item">
-                <img src="six.jpeg" alt="Aswathi and Vishak - 1">
+                <img src="IMG_1.JPG" alt="Aswathi and Vishak - 1">
             </div>
             <div class="photo-item">
-                <img src="seven.jpeg" alt="Aswathi and Vishak  - 2">
+                <img src="IMG_2.JPG" alt="Aswathi and Vishak  - 2">
             </div>
             <div class="photo-item">
-                <img src="eight.jpeg" alt="Aswathi and Vishak - 3">
+                <img src="IMG_3.JPG" alt="Aswathi and Vishak - 3">
             </div>
             <div class="photo-item">
-                <img src="nine.jpeg" alt="Aswathi and Vishak - 4">
+                <img src="IMG_4.JPG" alt="Aswathi and Vishak - 4">
             </div>
             <div class="photo-item">
-                <img src="ten.jpeg" alt="Aswathi and Vishak - 5">
+                <img src="IMG_5.JPG" alt="Aswathi and Vishak - 5">
             </div>
         </div>
     </section>
@@ -785,7 +809,7 @@
 
 // TYPING ANIMATION (invitation)
     (function () {
-      const inviteText = "With immense joy and gratitude, we invite you to witness and bless our union as we begin this beautiful chapter of our lives together. We would be truly honored to have you grace the occasion and bless our new beginning.";
+      const inviteText = "With immense joy and gratitude, we invite you to witness and bless our union as we begin this beautiful chapter of our lives together. We would be truly honored to have you grace the occasion and bless our new beginning..";
       const el = document.getElementById('invitationText');
       if (!el) return;
       let i = 0;
