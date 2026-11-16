@@ -600,8 +600,8 @@
     <!-- Invitation Text -->
     <section class="section invitation">
         <!-- empty; JS will type into this element -->
-        <p id="invitationText" class="typing caret" aria-live="polite" style="font-family: 'Great Vibes', cursive; font-size: 2em; color: #b56576;">
-  With immense joy and gratitude, we invite you to witness and bless our union as we begin this beautiful chapter of our lives together. Your presence will add to the magic of our special day.
+        <p id="invitationText" class="typing caret" aria-live="polite" style="font-family:'Cinzel', serif; font-size: 1.4em; color: #b56576;">
+  With immense joy and gratitude, we invite you to witness and bless our union as we begin this beautiful chapter of our lives together. We would be truly honored to have you grace the occasion and bless our new beginning.
 </p>
     </section>
 
@@ -783,7 +783,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // TYPING ANIMATION (invitation)
+// TYPING ANIMATION (invitation)
     (function () {
       const inviteText = "With immense joy and gratitude, we invite you to witness and bless our union as we begin this beautiful chapter of our lives together. Your presence will add to the magic of our special day.";
       const el = document.getElementById('invitationText');
@@ -793,7 +793,13 @@
       function typeNext() {
         el.textContent = inviteText.slice(0, i);
         i++;
-        if (i <= inviteText.length) setTimeout(typeNext, typingSpeed);
+        if (i <= inviteText.length) {
+          setTimeout(typeNext, typingSpeed);
+        } else {
+          // Typing is complete, remove the blinking line
+          el.style.borderRight = 'none';
+          el.classList.remove('caret');
+        }
       }
       setTimeout(typeNext, 600);
     })();
